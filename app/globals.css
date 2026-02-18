@@ -1,0 +1,203 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Sky blue couple theme - cute & warm */
+  --background: oklch(0.97 0.01 220);
+  --foreground: oklch(0.25 0.03 240);
+  --card: oklch(0.99 0.005 220);
+  --card-foreground: oklch(0.25 0.03 240);
+  --popover: oklch(0.99 0.005 220);
+  --popover-foreground: oklch(0.25 0.03 240);
+  --primary: oklch(0.72 0.12 220);
+  --primary-foreground: oklch(0.99 0.005 220);
+  --secondary: oklch(0.92 0.04 340);
+  --secondary-foreground: oklch(0.35 0.08 340);
+  --muted: oklch(0.94 0.02 220);
+  --muted-foreground: oklch(0.5 0.04 220);
+  --accent: oklch(0.85 0.08 340);
+  --accent-foreground: oklch(0.35 0.08 340);
+  --destructive: oklch(0.65 0.2 20);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.9 0.04 220);
+  --input: oklch(0.92 0.03 220);
+  --ring: oklch(0.72 0.12 220);
+  --chart-1: oklch(0.72 0.12 220);
+  --chart-2: oklch(0.75 0.12 340);
+  --chart-3: oklch(0.7 0.1 160);
+  --chart-4: oklch(0.78 0.12 80);
+  --chart-5: oklch(0.65 0.15 280);
+  --radius: 1rem;
+  --sidebar: oklch(0.97 0.01 220);
+  --sidebar-foreground: oklch(0.25 0.03 240);
+  --sidebar-primary: oklch(0.72 0.12 220);
+  --sidebar-primary-foreground: oklch(0.99 0.005 220);
+  --sidebar-accent: oklch(0.94 0.02 220);
+  --sidebar-accent-foreground: oklch(0.25 0.03 240);
+  --sidebar-border: oklch(0.9 0.04 220);
+  --sidebar-ring: oklch(0.72 0.12 220);
+
+  /* Custom couple theme colors */
+  --sky: oklch(0.82 0.1 220);
+  --sky-light: oklch(0.93 0.05 220);
+  --pink: oklch(0.82 0.1 340);
+  --pink-light: oklch(0.93 0.06 340);
+  --warm: oklch(0.88 0.06 80);
+}
+
+.dark {
+  --background: oklch(0.18 0.02 240);
+  --foreground: oklch(0.94 0.01 220);
+  --card: oklch(0.22 0.02 240);
+  --card-foreground: oklch(0.94 0.01 220);
+  --popover: oklch(0.22 0.02 240);
+  --popover-foreground: oklch(0.94 0.01 220);
+  --primary: oklch(0.75 0.12 220);
+  --primary-foreground: oklch(0.18 0.02 240);
+  --secondary: oklch(0.3 0.04 340);
+  --secondary-foreground: oklch(0.9 0.04 340);
+  --muted: oklch(0.28 0.02 240);
+  --muted-foreground: oklch(0.65 0.03 220);
+  --accent: oklch(0.35 0.06 340);
+  --accent-foreground: oklch(0.9 0.04 340);
+  --destructive: oklch(0.5 0.18 20);
+  --destructive-foreground: oklch(0.95 0 0);
+  --border: oklch(0.3 0.02 240);
+  --input: oklch(0.3 0.02 240);
+  --ring: oklch(0.75 0.12 220);
+  --chart-1: oklch(0.72 0.12 220);
+  --chart-2: oklch(0.75 0.12 340);
+  --chart-3: oklch(0.7 0.1 160);
+  --chart-4: oklch(0.78 0.12 80);
+  --chart-5: oklch(0.65 0.15 280);
+  --sidebar: oklch(0.22 0.02 240);
+  --sidebar-foreground: oklch(0.94 0.01 220);
+  --sidebar-primary: oklch(0.75 0.12 220);
+  --sidebar-primary-foreground: oklch(0.18 0.02 240);
+  --sidebar-accent: oklch(0.28 0.02 240);
+  --sidebar-accent-foreground: oklch(0.94 0.01 220);
+  --sidebar-border: oklch(0.3 0.02 240);
+  --sidebar-ring: oklch(0.75 0.12 220);
+
+  --sky: oklch(0.45 0.1 220);
+  --sky-light: oklch(0.3 0.06 220);
+  --pink: oklch(0.45 0.1 340);
+  --pink-light: oklch(0.3 0.06 340);
+  --warm: oklch(0.4 0.06 80);
+}
+
+@theme inline {
+  --font-sans: 'Nunito', 'Nunito Fallback', sans-serif;
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sky: var(--sky);
+  --color-sky-light: var(--sky-light);
+  --color-pink: var(--pink);
+  --color-pink-light: var(--pink-light);
+  --color-warm: var(--warm);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Floating hearts animation */
+@keyframes float-heart {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+  25% { transform: translateY(-15px) rotate(5deg); opacity: 0.8; }
+  50% { transform: translateY(-25px) rotate(-3deg); opacity: 0.5; }
+  75% { transform: translateY(-10px) rotate(3deg); opacity: 0.7; }
+}
+
+@keyframes float-cloud {
+  0%, 100% { transform: translateX(0) translateY(0); }
+  50% { transform: translateX(20px) translateY(-10px); }
+}
+
+@keyframes bounce-soft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 10px oklch(0.72 0.12 220 / 0.3); }
+  50% { box-shadow: 0 0 25px oklch(0.72 0.12 220 / 0.6); }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-3deg); }
+  75% { transform: rotate(3deg); }
+}
+
+.animate-float-heart {
+  animation: float-heart 3s ease-in-out infinite;
+}
+
+.animate-float-cloud {
+  animation: float-cloud 6s ease-in-out infinite;
+}
+
+.animate-bounce-soft {
+  animation: bounce-soft 2s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-wiggle {
+  animation: wiggle 1s ease-in-out infinite;
+}

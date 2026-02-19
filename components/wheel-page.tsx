@@ -146,32 +146,17 @@ export function WheelPage() {
     const targetIndex = Math.floor(Math.random() * options.length)
     const sliceAngle = 360 / options.length
 
-    // The pointer is at the top (12 o'clock).
-    // In canvas drawing, slice 0 starts at -90° (12 o'clock).
-    // Slice i center is at (i * sliceAngle + sliceAngle/2 - 90) degrees from 12 o'clock.
-    // After rotating the wheel clockwise by R degrees, the slice whose center was
-    // at angle A from 12 o'clock will be at (A - R) mod 360 degrees.
-    // We want the slice center to be at 0° (under pointer) after rotation.
-    // So we need: (targetSliceCenter - totalRotation) % 360 === 0
-    // i.e., totalRotation % 360 === targetSliceCenter
-    const targetSliceCenter = targetIndex * sliceAngle + sliceAngle / 2 - 90
-    const normalizedTargetSliceCenter = ((targetSliceCenter % 360) + 360) % 360
+    // Pointer is at -90° (12 o'clock in canvas coordinates).
+    // Slice i center is at: (i * sliceAngle - 90 + sliceAngle/2)°
+    // After rotating by R°, slice center is at: (i * sliceAngle - 90 + sliceAngle/2 + R)°
+    // We want: (i * sliceAngle - 90 + sliceAngle/2 + R) ≡ -90 (mod 360)
+    // So: R ≡ -i * sliceAngle - sliceAngle/2 (mod 360)
+    const targetRotation = -targetIndex * sliceAngle - sliceAngle / 2
     const currentRemainder = ((rotation % 360) + 360) % 360
-    const needed = ((normalizedTargetSliceCenter - currentRemainder) % 360 + 360) % 360
+    const normalizedTarget = ((targetRotation % 360) + 360) % 360
+    const needed = ((normalizedTarget - currentRemainder + 360) % 360)
     const extraRotations = 5 + Math.floor(Math.random() * 5)
     const totalRotation = rotation + extraRotations * 360 + needed
-    
-    // Debug logging
-    console.log('Spin debug:', {
-      targetIndex,
-      targetSliceCenter,
-      normalizedTargetSliceCenter,
-      currentRemainder,
-      needed,
-      totalRotation: totalRotation % 360,
-      options: options.length,
-      sliceAngle
-    })
 
     setRotation(totalRotation)
 

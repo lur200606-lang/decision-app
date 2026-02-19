@@ -147,15 +147,31 @@ export function WheelPage() {
     const sliceAngle = 360 / options.length
 
     // The pointer is at the top (12 o'clock).
-    // Slice i center is at (i * sliceAngle + sliceAngle/2) degrees from 12 o'clock.
+    // In canvas drawing, slice 0 starts at -90° (12 o'clock).
+    // Slice i center is at (i * sliceAngle + sliceAngle/2 - 90) degrees from 12 o'clock.
     // After rotating the wheel clockwise by R degrees, the slice whose center was
-    // at R%360 degrees from 12 o'clock is now under the pointer.
-    // So we need: totalRotation % 360 === targetIndex * sliceAngle + sliceAngle / 2
-    const targetSliceCenter = targetIndex * sliceAngle + sliceAngle / 2
+    // at angle A from 12 o'clock will be at (A - R) mod 360 degrees.
+    // We want the slice center to be at 0° (under pointer) after rotation.
+    // So we need: (targetSliceCenter - totalRotation) % 360 === 0
+    // i.e., totalRotation % 360 === targetSliceCenter
+    const targetSliceCenter = targetIndex * sliceAngle + sliceAngle / 2 - 90
+    const normalizedTargetSliceCenter = ((targetSliceCenter % 360) + 360) % 360
     const currentRemainder = ((rotation % 360) + 360) % 360
-    const needed = ((targetSliceCenter - currentRemainder) % 360 + 360) % 360
+    const needed = ((normalizedTargetSliceCenter - currentRemainder) % 360 + 360) % 360
     const extraRotations = 5 + Math.floor(Math.random() * 5)
     const totalRotation = rotation + extraRotations * 360 + needed
+    
+    // Debug logging
+    console.log('Spin debug:', {
+      targetIndex,
+      targetSliceCenter,
+      normalizedTargetSliceCenter,
+      currentRemainder,
+      needed,
+      totalRotation: totalRotation % 360,
+      options: options.length,
+      sliceAngle
+    })
 
     setRotation(totalRotation)
 

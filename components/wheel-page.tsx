@@ -146,15 +146,16 @@ export function WheelPage() {
     const targetIndex = Math.floor(Math.random() * options.length)
     const sliceAngle = 360 / options.length
 
-    // Pointer is at -90° (12 o'clock in canvas coordinates).
-    // Slice i center is at: (i * sliceAngle - 90 + sliceAngle/2)°
-    // After rotating by R°, slice center is at: (i * sliceAngle - 90 + sliceAngle/2 + R)°
-    // We want: (i * sliceAngle - 90 + sliceAngle/2 + R) ≡ -90 (mod 360)
-    // So: R ≡ -i * sliceAngle - sliceAngle/2 (mod 360)
-    const targetRotation = -targetIndex * sliceAngle - sliceAngle / 2
-    const currentRemainder = ((rotation % 360) + 360) % 360
-    const normalizedTarget = ((targetRotation % 360) + 360) % 360
-    const needed = ((normalizedTarget - currentRemainder + 360) % 360)
+    // Pointer is at top (12 o'clock). In canvas, slice 0 starts at -90° and goes clockwise.
+    // Slice i occupies angles from (i * sliceAngle - 90) to ((i+1) * sliceAngle - 90).
+    // Slice i center is at: i * sliceAngle - 90 + sliceAngle/2 = i * sliceAngle + sliceAngle/2 - 90
+    // When wheel rotates by R degrees (CSS rotate), the slice center moves to: sliceCenter + R
+    // We want slice center to align with pointer at -90°:
+    // (i * sliceAngle + sliceAngle/2 - 90 + R) mod 360 = -90 mod 360 = 270
+    // So: R mod 360 = 270 - (i * sliceAngle + sliceAngle/2 - 90) = 360 - i * sliceAngle - sliceAngle/2
+    const targetAngle = (360 - targetIndex * sliceAngle - sliceAngle / 2) % 360
+    const currentAngle = ((rotation % 360) + 360) % 360
+    let needed = (targetAngle - currentAngle + 360) % 360
     const extraRotations = 5 + Math.floor(Math.random() * 5)
     const totalRotation = rotation + extraRotations * 360 + needed
 

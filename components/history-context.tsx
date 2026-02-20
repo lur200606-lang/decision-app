@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useState, useCallback, type ReactNode } from "react"
+import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react"
 
 export interface HistoryItem {
   id: string
@@ -23,8 +23,33 @@ interface HistoryContextType {
 const HistoryContext = createContext<HistoryContextType | null>(null)
 
 export function HistoryProvider({ children }: { children: ReactNode }) {
-  const [history, setHistory] = useState<HistoryItem[]>([])
+  // Load history from localStorage on initial render
+  const [history, setHistory] = useState<HistoryItem[]>(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const saved = localStorage.getItem("decision-app-history")
+        if (saved) {
+          return JSON.parse(saved)
+        }
+      } catch (error) {
+        console.error("Failed to load history from localStorage:", error)
+      }
+    }
+    return []
+  })
+  
   const [pendingPreset, setPendingPreset] = useState<string[] | null>(null)
+
+  // Save history to localStorage whenever it changes
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.setItem("decision-app-history", JSON.stringify(history))
+      } catch (error) {
+        console.error("Failed to save history to localStorage:", error)
+      }
+    }
+  }, [history])
 
   const addHistory = useCallback((item: Omit<HistoryItem, "id" | "timestamp">) => {
     const newItem: HistoryItem = {
@@ -37,6 +62,9 @@ export function HistoryProvider({ children }: { children: ReactNode }) {
 
   const clearHistory = useCallback(() => {
     setHistory([])
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("decision-app-history")
+    }
   }, [])
 
   const loadPreset = useCallback((options: string[]) => {

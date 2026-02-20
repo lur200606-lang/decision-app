@@ -158,6 +158,19 @@ export function WheelPage() {
     let needed = (targetAngle - currentAngle + 360) % 360
     const extraRotations = 5 + Math.floor(Math.random() * 5)
     const totalRotation = rotation + extraRotations * 360 + needed
+    
+    // Debug logging for Netlify deployment
+    console.log('Wheel spin calculation:', {
+      targetIndex,
+      sliceAngle,
+      targetAngle,
+      currentAngle,
+      needed,
+      extraRotations,
+      finalRotation: totalRotation % 360,
+      optionsCount: options.length,
+      options: options
+    })
 
     setRotation(totalRotation)
 
